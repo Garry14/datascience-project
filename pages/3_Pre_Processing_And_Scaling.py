@@ -1,13 +1,11 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-import plotly.express as px
 import pathlib
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.compose import ColumnTransformer
 from imblearn.combine import SMOTETomek
+import joblib
 
 st.title("⚙️ Pre-Processing and Scaling")
 st.markdown(
@@ -79,3 +77,14 @@ X_train_resampled, y_train_resampled = smote_tomek.fit_resample(
 )
 st.write(f"Original training set size: {X_train_transformed.shape[0]} samples")
 st.write(f"Resampled training set size: {X_train_resampled.shape[0]} samples")
+
+# Save preprocessor
+preprocessor_path = "preprocessor.pkl"
+if pathlib.Path(preprocessor_path).exists():
+    st.warning(
+        f"{preprocessor_path} already exists. It will be overwritten with the new preprocessor."
+    )
+else:
+    st.write(f"{preprocessor_path} does not exist. It will be created.")
+joblib.dump(preprocessor, preprocessor_path)
+st.write(f"Preprocessor saved to {preprocessor_path}")
