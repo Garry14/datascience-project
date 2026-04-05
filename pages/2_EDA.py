@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import plotly.express as px
 
 st.title("📊 Exploratory Data Analysis (EDA)")
 st.markdown(
@@ -47,10 +48,31 @@ st.write("Dropped 'CustomerID' column.")
 st.write("Shape after dropping: ", data.shape)
 
 st.subheader("📊 Boxplot")
-categorical_columns = data.select_dtypes(include=["object"]).columns
-for col in categorical_columns:
-    st.write(f"### {col}")
-    plt.figure(figsize=(10, 4))
-    sns.boxplot(x=col, y="Total Charges", data=data)
-    plt.xticks(rotation=45)
-    st.pyplot(plt)
+# Target Column
+data['Churn'] = data['Churn Label']
+
+st.title("📊 Boxplot Analysis")
+
+# Only numeric columns
+num_cols = data.select_dtypes(include=['int64', 'float64']).columns
+
+# Exclude target and related columns
+exclude = ['Churn Value', 'Churn Score']
+num_cols = [col for col in num_cols if col not in exclude]
+
+# Plot boxplots in a grid layout
+n_cols = 2
+
+for i in range(0, len(num_cols), n_cols):
+    cols = st.columns(n_cols)
+    
+    for j, col in enumerate(num_cols[i:i+n_cols]):
+        with cols[j]:
+            fig = px.box(
+                data,
+                x="Churn",
+                y=col,
+                color="Churn",
+                title=f"{col} vs Churn"
+            )
+            st.plotly_chart(fig, use_container_width=True)
