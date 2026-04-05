@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.express as px
+import os
 
 st.title("📊 Exploratory Data Analysis (EDA)")
 st.markdown(
@@ -76,3 +77,12 @@ for i in range(0, len(num_cols), n_cols):
                 title=f"{col} vs Churn"
             )
             st.plotly_chart(fig, use_container_width=True)
+
+# Save cleaned data for future use
+file_path = "cleaned_data.csv"
+
+if not os.path.exists(file_path):
+    data.to_csv(file_path, index=False)
+    st.write(f"Cleaned data saved to {file_path}")
+else:
+    st.write(f"{file_path} already exists. Skipping save.")

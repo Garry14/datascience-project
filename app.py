@@ -20,6 +20,7 @@ st.markdown(
 Gunakan menu di sidebar untuk navigasi:
 - Introduction
 - EDA
+- Pre-Processing and Scaling
 - Modeling
 - Prediction
 """
