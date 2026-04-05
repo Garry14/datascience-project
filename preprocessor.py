@@ -7,6 +7,7 @@ def load_data(path="./cleaned_data.csv"):
     df = pd.read_csv(path)
     # Fix Total Charges
     df["Total Charges"] = pd.to_numeric(df["Total Charges"], errors="coerce")
+    df["Senior Citizen"] = df["Senior Citizen"].astype(str)
     return df
 
 

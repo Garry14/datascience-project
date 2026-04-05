@@ -21,11 +21,11 @@ st.markdown(
 data = pd.DataFrame(
     {
         "Gender": ["Male"],
-        "Senior Citizen": [0],
+        "Senior Citizen": ["1"],
         "Partner": ["Yes"],
         "Dependents": ["No"],
-        "Tenure Months": [12],
-        "Phone Service": ["Yes"],
+        "Tenure Months": [1],
+        "Phone Service": ["No"],
         "Multiple Lines": ["No"],
         "Internet Service": ["Fiber optic"],
         "Online Security": ["No"],
@@ -37,7 +37,7 @@ data = pd.DataFrame(
         "Contract": ["Month-to-month"],
         "Paperless Billing": ["Yes"],
         "Payment Method": ["Electronic check"],
-        "Monthly Charges": [70],
+        "Monthly Charges": [100],
         "Total Charges": [1400],
     }
 )
