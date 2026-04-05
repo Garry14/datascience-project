@@ -13,9 +13,9 @@ st.markdown(
 )
 
 # Load dataset
-file_path = pathlib.Path(__file__).parent / "cleaned_data.csv"
+file_path = "./cleaned_data.csv"
 
-if file_path.exists():
+if pathlib.Path(file_path).exists():
     data = pd.read_csv(file_path)
     st.subheader("📂 Dataset Overview")
     st.dataframe(data.head())
