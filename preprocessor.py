@@ -4,11 +4,35 @@ from sklearn.preprocessing import StandardScaler, OneHotEncoder
 
 
 def load_data(path="./cleaned_data.csv"):
-    return pd.read_csv(path)
+    df = pd.read_csv(path)
+    # Fix Total Charges
+    df["Total Charges"] = pd.to_numeric(df["Total Charges"], errors="coerce")
+    return df
 
 
 def split_features_target(df, target="Churn"):
-    X = df.drop(columns=[target])
+    FEATURES = [
+        "Gender",
+        "Senior Citizen",
+        "Partner",
+        "Dependents",
+        "Tenure Months",
+        "Phone Service",
+        "Multiple Lines",
+        "Internet Service",
+        "Online Security",
+        "Online Backup",
+        "Device Protection",
+        "Tech Support",
+        "Streaming TV",
+        "Streaming Movies",
+        "Contract",
+        "Paperless Billing",
+        "Payment Method",
+        "Monthly Charges",
+        "Total Charges",
+    ]
+    X = df[FEATURES]
     y = df[target]
     return X, y
 

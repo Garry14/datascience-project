@@ -45,14 +45,15 @@ st.write(f"Testing set size: {X_test.shape[0]} samples")
 # Separate numerical and categorical columns
 st.subheader("🔍 Numerical and Categorical Columns")
 num_cols, cat_cols = get_column_types(X_train)
-st.write(f"Numerical columns: {X['Country'].dtype}")
 st.write(f"Numerical columns: {list(num_cols)}")
 st.write(f"Categorical columns: {list(cat_cols)}")
 
 # Preprocessing pipeline
 st.subheader("⚙️ Preprocessing Pipeline")
 preprocessor = build_preprocessor(num_cols, cat_cols)
-st.write("Preprocessing pipeline created with StandardScaler for numerical features and OneHotEncoder for categorical features.")
+st.write(
+    "Preprocessing pipeline created with StandardScaler for numerical features and OneHotEncoder for categorical features."
+)
 st.write("Preprocessor details:")
 st.write(preprocessor)
 
@@ -72,7 +73,7 @@ st.write("Model trained successfully.")
 st.write("Pipeline details:")
 st.write(pipeline)
 
-# Save
+# Save model
 st.subheader("💾 Saving the Model")
 joblib.dump(pipeline, "model_churn.pkl")
 st.write("Model saved as 'model_churn.pkl'.")
