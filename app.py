@@ -9,38 +9,64 @@ import pickle
 with open("./v5_lr_generated_model.pkl", "rb") as f:
     model = pickle.load(f)
 
+
 # =============================
 # ENCODER FUNCTION (PUNYA LU)
 # =============================
 def encode_input(data):
     columns = [
-        'tenure_months', 'monthly_charges', 'total_charges',
-        'senior_citizen_no', 'senior_citizen_yes',
-        'partner_no', 'partner_yes',
-        'dependents_no', 'dependents_yes',
-        'phone_service_no', 'phone_service_yes',
-        'multiple_lines_no', 'multiple_lines_no_phone_service', 'multiple_lines_yes',
-        'internet_service_dsl', 'internet_service_fiber_optic', 'internet_service_no',
-        'online_security_no', 'online_security_no_internet_service', 'online_security_yes',
-        'online_backup_no', 'online_backup_no_internet_service', 'online_backup_yes',
-        'device_protection_no', 'device_protection_no_internet_service', 'device_protection_yes',
-        'tech_support_no', 'tech_support_no_internet_service', 'tech_support_yes',
-        'streaming_tv_no', 'streaming_tv_no_internet_service', 'streaming_tv_yes',
-        'streaming_movies_no', 'streaming_movies_no_internet_service', 'streaming_movies_yes',
-        'contract_month_to_month', 'contract_one_year', 'contract_two_year',
-        'paperless_billing_no', 'paperless_billing_yes',
-        'payment_method_bank_transfer_automatic',
-        'payment_method_credit_card_automatic',
-        'payment_method_electronic_check',
-        'payment_method_mailed_check'
+        "tenure_months",
+        "monthly_charges",
+        "total_charges",
+        "senior_citizen_no",
+        "senior_citizen_yes",
+        "partner_no",
+        "partner_yes",
+        "dependents_no",
+        "dependents_yes",
+        "phone_service_no",
+        "phone_service_yes",
+        "multiple_lines_no",
+        "multiple_lines_no_phone_service",
+        "multiple_lines_yes",
+        "internet_service_dsl",
+        "internet_service_fiber_optic",
+        "internet_service_no",
+        "online_security_no",
+        "online_security_no_internet_service",
+        "online_security_yes",
+        "online_backup_no",
+        "online_backup_no_internet_service",
+        "online_backup_yes",
+        "device_protection_no",
+        "device_protection_no_internet_service",
+        "device_protection_yes",
+        "tech_support_no",
+        "tech_support_no_internet_service",
+        "tech_support_yes",
+        "streaming_tv_no",
+        "streaming_tv_no_internet_service",
+        "streaming_tv_yes",
+        "streaming_movies_no",
+        "streaming_movies_no_internet_service",
+        "streaming_movies_yes",
+        "contract_month_to_month",
+        "contract_one_year",
+        "contract_two_year",
+        "paperless_billing_no",
+        "paperless_billing_yes",
+        "payment_method_bank_transfer_automatic",
+        "payment_method_credit_card_automatic",
+        "payment_method_electronic_check",
+        "payment_method_mailed_check",
     ]
 
     encoded = pd.DataFrame(0, index=[0], columns=columns)
 
     # numeric
-    encoded['tenure_months'] = data['Tenure Months'][0]
-    encoded['monthly_charges'] = data['Monthly Charges'][0]
-    encoded['total_charges'] = data['Total Charges'][0]
+    encoded["tenure_months"] = data["Tenure Months"][0]
+    encoded["monthly_charges"] = data["Monthly Charges"][0]
+    encoded["total_charges"] = data["Total Charges"][0]
 
     def encode_yes_no(col, prefix):
         val = data[col][0]
@@ -105,6 +131,7 @@ def encode_input(data):
 
     return encoded
 
+
 # =============================
 # UI
 # =============================
@@ -123,9 +150,11 @@ tenure = st.sidebar.number_input("Tenure Months", 0, 100, 1)
 monthly = st.sidebar.number_input("Monthly Charges", 0.0, 1000.0, 50.0)
 total = st.sidebar.number_input("Total Charges", 0.0, 100000.0, 50.0)
 
+
 # Yes/No
 def yes_no(label):
     return st.sidebar.selectbox(label, ["Yes", "No"])
+
 
 senior = yes_no("Senior Citizen")
 partner = yes_no("Partner")
@@ -134,13 +163,17 @@ phone = yes_no("Phone Service")
 paperless = yes_no("Paperless Billing")
 
 # Multiple Lines
-multiple_lines = st.sidebar.selectbox("Multiple Lines", ["Yes", "No", "No phone service"])
+multiple_lines = st.sidebar.selectbox(
+    "Multiple Lines", ["Yes", "No", "No phone service"]
+)
 
 # Internet
 internet = st.sidebar.selectbox("Internet Service", ["DSL", "Fiber optic", "No"])
 
+
 def service(label):
     return st.sidebar.selectbox(label, ["Yes", "No", "No internet service"])
+
 
 online_security = service("Online Security")
 online_backup = service("Online Backup")
@@ -153,36 +186,111 @@ streaming_movies = service("Streaming Movies")
 contract = st.sidebar.selectbox("Contract", ["Month-to-month", "One year", "Two year"])
 
 # Payment
-payment = st.sidebar.selectbox("Payment Method", [
-    "Bank transfer (automatic)",
-    "Credit card (automatic)",
-    "Electronic check",
-    "Mailed check"
-])
+payment = st.sidebar.selectbox(
+    "Payment Method",
+    [
+        "Bank transfer (automatic)",
+        "Credit card (automatic)",
+        "Electronic check",
+        "Mailed check",
+    ],
+)
 
 # =============================
 # DATAFRAME
 # =============================
-input_data = pd.DataFrame({
-    "Tenure Months": [tenure],
-    "Monthly Charges": [monthly],
-    "Total Charges": [total],
-    "Senior Citizen": [senior],
-    "Partner": [partner],
-    "Dependents": [dependents],
-    "Phone Service": [phone],
-    "Multiple Lines": [multiple_lines],
-    "Internet Service": [internet],
-    "Online Security": [online_security],
-    "Online Backup": [online_backup],
-    "Device Protection": [device_protection],
-    "Tech Support": [tech_support],
-    "Streaming TV": [streaming_tv],
-    "Streaming Movies": [streaming_movies],
-    "Contract": [contract],
-    "Paperless Billing": [paperless],
-    "Payment Method": [payment]
-})
+input_data = pd.DataFrame(
+    {
+        "Tenure Months": [tenure],
+        "Monthly Charges": [monthly],
+        "Total Charges": [total],
+        "Senior Citizen": [senior],
+        "Partner": [partner],
+        "Dependents": [dependents],
+        "Phone Service": [phone],
+        "Multiple Lines": [multiple_lines],
+        "Internet Service": [internet],
+        "Online Security": [online_security],
+        "Online Backup": [online_backup],
+        "Device Protection": [device_protection],
+        "Tech Support": [tech_support],
+        "Streaming TV": [streaming_tv],
+        "Streaming Movies": [streaming_movies],
+        "Contract": [contract],
+        "Paperless Billing": [paperless],
+        "Payment Method": [payment],
+    }
+)
+
+
+# =============================
+# DECODE ONE HOT ENCODED DATA
+# =============================
+def decode_one_hot(encoded_df):
+    result = {}
+
+    mapping = {
+        # binary
+        "senior_citizen": "Senior Citizen",
+        "partner": "Partner",
+        "dependents": "Dependents",
+        "phone_service": "Phone Service",
+        "paperless_billing": "Paperless Billing",
+        # multiple lines
+        "multiple_lines": "Multiple Lines",
+        # internet service
+        "internet_service": "Internet Service",
+        # services
+        "online_security": "Online Security",
+        "online_backup": "Online Backup",
+        "device_protection": "Device Protection",
+        "tech_support": "Tech Support",
+        "streaming_tv": "Streaming TV",
+        "streaming_movies": "Streaming Movies",
+        # contract
+        "contract": "Contract",
+        # payment
+        "payment_method": "Payment Method",
+    }
+
+    for col in encoded_df.columns:
+        value = encoded_df[col].values[0]
+
+        if value == 1:
+            parts = col.split("_")
+
+            # ambil prefix group
+            if col.startswith("payment_method"):
+                group = "payment_method"
+            elif col.startswith("internet_service"):
+                group = "internet_service"
+            elif col.startswith("multiple_lines"):
+                group = "multiple_lines"
+            elif col.startswith("contract"):
+                group = "contract"
+            elif col.startswith("senior_citizen"):
+                group = "senior_citizen"
+            elif col.startswith("paperless_billing"):
+                group = "paperless_billing"
+            else:
+                group = "_".join(parts[:2])
+
+            label = mapping.get(group, group.replace("_", " ").title())
+
+            # ambil value (YES/NO/DSL/etc)
+            value_label = col.replace(group + "_", "")
+            value_label = value_label.replace("_", " ").title()
+
+            # special cleanup biar bagus UI
+            if value_label == "":
+                value_label = "Yes"
+            if value_label == "No Internet Service":
+                value_label = "No Internet Service"
+
+            result[label] = value_label
+
+    return result
+
 
 # =============================
 # PREDICT
@@ -202,4 +310,21 @@ if st.sidebar.button("🚀 Predict"):
         st.success(f"Customer TIDAK churn ✅ (Prob: {proba:.2f})")
 
     st.write("### 🔍 Encoded Data")
-    st.dataframe(encoded)
+    st.subheader("Customer Summary")
+
+    decoded = decode_one_hot(encoded)
+
+    # for k, v in decoded.items():
+    #     st.write(f"**{k} :** {v}")
+
+    items = list(decoded.items())
+
+    col1, col2 = st.columns(2)
+
+    for i, (k, v) in enumerate(items):
+        if i % 2 == 0:
+            with col1:
+                st.write(f"**{k} :** {v}")
+        else:
+            with col2:
+                st.write(f"**{k} :** {v}")
