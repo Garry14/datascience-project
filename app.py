@@ -5,7 +5,6 @@ import pickle
 # =============================
 # LOAD MODEL
 # =============================
-# Ganti dengan path model lu
 with open("./v6_lr_generated_model.pkl", "rb") as f:
     model = pickle.load(f)
 
