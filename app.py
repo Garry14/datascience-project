@@ -6,7 +6,7 @@ import pickle
 # LOAD MODEL
 # =============================
 # Ganti dengan path model lu
-with open("./v5_lr_generated_model.pkl", "rb") as f:
+with open("./v4_rf_generated_model.pkl", "rb") as f:
     model = pickle.load(f)
 
 
@@ -328,9 +328,6 @@ if st.sidebar.button("🚀 Predict"):
     st.subheader("Customer Summary")
 
     decoded = decode_one_hot(encoded)
-
-    # for k, v in decoded.items():
-    #     st.write(f"**{k} :** {v}")
 
     items = list(decoded.items())
 
