@@ -256,6 +256,21 @@ def decode_one_hot(encoded_df):
     for col in encoded_df.columns:
         value = encoded_df[col].values[0]
 
+        # =========================
+        # 1. NUMERIC
+        # =========================
+        if col == "tenure_months":
+            result["Tenure"] = f"{value} Month(s)"
+            continue
+
+        if col in ["monthly_charges", "total_charges"]:
+            result[col.replace("_", " ").title()] = f"${value:.2f}"
+            continue
+
+
+        # =========================
+        # 2. ONE HOT
+        # =========================
         if value == 1:
             parts = col.split("_")
 
@@ -305,9 +320,9 @@ if st.sidebar.button("🚀 Predict"):
     st.subheader("📈 Prediction Result")
 
     if prediction == 1:
-        st.error(f"Customer akan CHURN ❌ (Prob: {proba:.2f})")
+        st.error(f"Customer akan CHURN ❌ (Kemungkinan Churn: {proba:.2%})")
     else:
-        st.success(f"Customer TIDAK churn ✅ (Prob: {proba:.2f})")
+        st.success(f"Customer TIDAK churn ✅ (Kemungkinan Churn: {proba:.2%})")
 
     st.write("### 🔍 Encoded Data")
     st.subheader("Customer Summary")
